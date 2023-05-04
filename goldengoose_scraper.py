@@ -16,13 +16,14 @@ product_dict = {"id": [],
                 "description": [],
                 "details": []}
 
-
-driver = webdriver.Chrome('/Applications/WebDrivers/chromedriver')
-driver.delete_all_cookies()
-
 # TODO create URL builder
 # Hardcoded URL
 main_link = "https://www.goldengoose.com/gb/en/ls/men/sneakers"
+product_links = []
+json_data = []
+driver = webdriver.Chrome('/Applications/WebDrivers/chromedriver')
+
+driver.delete_all_cookies()
 
 
 def make_soup(url):
@@ -34,7 +35,6 @@ def make_soup(url):
 soup = make_soup(main_link)
 product_grid = soup.find('ul', class_='row product-grid view-grid list-unstyled')
 products = product_grid.find_all('li', class_='product-tile-container')
-product_links = []
 
 # Populate product_links array
 for product in products:
@@ -42,8 +42,7 @@ for product in products:
     # TODO remove break after scrapers have been built
     break
 
-json_data = []
-
+# Scrape data from individual pages
 for link in product_links:
     soup = make_soup(link)
     product_wrapper = soup.find('div', class_='pdp__wrapper product-detail-page product-detail product-wrapper js-pdp-main')
